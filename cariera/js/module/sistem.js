@@ -53,20 +53,21 @@
     if (g.Cariera.module.reamintiri) corp += g.Cariera.module.reamintiri.banner();
     if (g.Cariera.module.retine) corp += g.Cariera.module.retine.banner();
     var vp = !!S.ia("vp.gata", false), st = !!S.ia("stima.gata", false);
-    corp += C.drum([
-      { eticheta: "<strong>1. Test de interese</strong>" + pasStatus(test), ecran: test ? "interese/rezultat" : "interese/intro", gata: test },
-      { eticheta: "<strong>2. Puncte forte și valori</strong>" + pasStatus(forte), ecran: forte ? "forte/rezumat" : "forte/intro", gata: forte },
-      { eticheta: "<strong>3. Meserii și domenii</strong><span class=\"stare\">" + (test ? "idei pentru tine" : "mai întâi testul") + "</span>", ecran: "meserii/lista", gata: (S.ia("meserii.salvate", []) || []).length > 0, opt: !test },
-      { eticheta: "<strong>4. Planul meu</strong>" + pasStatus(plan), ecran: "plan/hub", gata: plan },
-      { eticheta: "<strong>5. Sfaturi</strong><span class=\"stare\">citire scurtă</span>", ecran: "sfaturi/lista", gata: false, opt: true },
-      { eticheta: "<strong>6. Comunicarea asertivă</strong>" + pasStatus(!!S.ia("asertiv.gata", false)), ecran: "asertiv/intro", gata: !!S.ia("asertiv.gata", false) },
-      { eticheta: "<strong>7. Valorile mele</strong>" + pasStatus(vp), ecran: vp ? "valorile/rezultat" : "valorile/intro", gata: vp },
-      { eticheta: "<strong>8. Cum mă văd eu</strong>" + pasStatus(st), ecran: st ? "stima/rezultat" : "stima/intro", gata: st },
-      { eticheta: "<strong>9. " + C.esc(g.DATE.corp.elev.titlu) + "</strong>" + pasStatus(!!S.ia("corp.gata", false)), ecran: "corp/intro", gata: !!S.ia("corp.gata", false) },
-      { eticheta: "<strong>10. " + C.esc(g.DATE.cerinte.titlu) + "</strong>" + pasStatus(!!S.ia("cerinte.gata", false)), ecran: "cerinte/lista", gata: !!S.ia("cerinte.gata", false) },
-      { eticheta: "<strong>11. " + C.esc(g.DATE.cauta.titlu) + "</strong>" + pasStatus(!!S.ia("cauta.gata", false)), ecran: "cauta/intro", gata: !!S.ia("cauta.gata", false) }
+    corp += g.Cariera.module.bosi.carduri([
+      { nume: "Test de interese", ecran: test ? "interese/rezultat" : "interese/intro", gata: test },
+      { nume: "Puncte forte și valori", ecran: forte ? "forte/rezumat" : "forte/intro", gata: forte },
+      { nume: "Meserii și domenii", ecran: "meserii/lista", gata: (S.ia("meserii.salvate", []) || []).length > 0, opt: !test },
+      { nume: "Planul meu", ecran: "plan/hub", gata: plan },
+      { nume: "Sfaturi", ecran: "sfaturi/lista", gata: false, opt: true },
+      { nume: "Comunicarea asertivă", ecran: "asertiv/intro", gata: !!S.ia("asertiv.gata", false) },
+      { nume: "Valorile mele", ecran: vp ? "valorile/rezultat" : "valorile/intro", gata: vp },
+      { nume: "Cum mă văd eu", ecran: st ? "stima/rezultat" : "stima/intro", gata: st },
+      { nume: g.DATE.corp.elev.titlu, ecran: "corp/intro", gata: !!S.ia("corp.gata", false) },
+      { nume: g.DATE.cerinte.titlu, ecran: "cerinte/lista", gata: !!S.ia("cerinte.gata", false) },
+      { nume: g.DATE.cauta.titlu, ecran: "cauta/intro", gata: !!S.ia("cauta.gata", false) }
     ]) +
       '<div class="rand">' + C.buton("Caietul meu", "nav", "caiet/tot") + "</div>";
+    corp += g.Cariera.module.bosi.bara();
     return C.pagina("Drumul tău", corp, null);
   }
 
@@ -103,14 +104,15 @@
 
   function despre() {
     var corp = "<p><strong>Aplicația te ajută să te gândești la drumul tău în carieră.</strong></p>" +
-      "<p>Dacă te simți rău sau ești îngrijorat(ă), vorbește cu un adult de încredere, cu consilierul școlii sau cu medicul de familie. Dacă tu sau altcineva sunteți în pericol acum, sună la 112.</p>" +
       '<div class="rand">' + C.buton("Înapoi", "nav", "sistem/setari", "primar") + "</div>";
     return C.pagina("Despre aplicație", corp, "sistem/setari");
   }
 
   function criza() {
     var corp = "<p>Mulțumesc că ai scris asta. Se pare că poate treci printr-un moment greu. Nu ești singur(ă) și nu trebuie să rămâi singur(ă) cu asta.</p>" +
-      "<p><strong>Te rog să vorbești cât mai curând cu un adult în care ai încredere.</strong> De exemplu: un părinte sau o rudă, un profesor, consilierul școlii sau medicul de familie.</p>" +
+      (C.eAdult()
+        ? "<p><strong>Te rog să vorbești cât mai curând cu cineva în care ai încredere.</strong> De exemplu: cineva din familie, un prieten apropiat, medicul de familie sau un specialist.</p>"
+        : "<p><strong>Te rog să vorbești cât mai curând cu un adult în care ai încredere.</strong> De exemplu: un părinte sau o rudă, un profesor, consilierul școlii sau medicul de familie.</p>") +
       '<p class="alerta"><strong>Dacă tu sau altcineva sunteți în pericol acum, sună la 112.</strong></p>' +
       '<div class="rand">' + C.buton("Mă întorc la aplicație", "sistem.inapoi", null, "primar") + "</div>";
     return C.pagina("Ești important(ă)", corp, null);
